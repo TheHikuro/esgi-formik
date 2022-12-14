@@ -1,28 +1,35 @@
 <script setup>
-import { defineProps, defineEmits, defineExpose } from 'vue'
+import { defineProps } from "vue";
 defineProps({
     initialValues: {
         type: Object,
-        required: true
+        required: true,
     },
-    validator: {
-        type: Function,
-        required: true
+    validationSchema: {
+        type: Object,
+        required: true,
     },
     onSubmit: {
         type: Function,
-        required: true
-    }
-})
+        required: true,
+    },
+});
+
+const setFormValue = (name, value) => {
+    value[name] = value;
+};
+
+const handleSubmit = () => {
+    onSubmit({
+        values,
+    });
+};
+
 </script>
 
 <template>
-    <slot>
-
-    </slot>
-
+    <form @submit.prevent="handleSubmit">
+        <slot :values="initialValues" :setFormValue="setFormValue" />
+    </form>
 </template>
-
-<style scoped>
-
-</style>
+  
