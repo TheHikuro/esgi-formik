@@ -1,47 +1,74 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import Formik from './components/Formik.vue';
+import InputCustom from './components/InputCustom.vue';
+import { reactive } from 'vue';
+import * as yup from "yup";
+
+const initialValues = reactive({
+  name: "",
+  email: "",
+  password: "",
+  gender: "male",
+  comment: "",
+});
+
+const validationSchema = yup.object({
+  name: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string().min(8).required(),
+  gender: yup.string().required(),
+  comment: yup.string().required(),
+});
+
+const onSubmit = (values) => {
+  console.log('test');
+};
+
 </script>
 
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+<template v-slot="defaut">
+  <div class="main-container">
+    <Formik :initial-values="initialValues" :validation-schema="validationSchema" :on-submit="onSubmit">
+      <InputCustom name="name" as='input' label="Name" placeholder="ex: Karl Marques" />
+      <InputCustom name="email" as="input" label="Email" placeholder="ex: exemple@myges.fr" />
+      <InputCustom name="password" as="input" label="Password" placeholder="ex: Admin(lol)" type="password" />
+      <InputCustom name="gender" as="select">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </InputCustom>
+      <InputCustom name="comment" as="textarea" placeholder="Comment" />
+      <button type="submit">Submit</button>
+    </Formik>
+    <div class="values">
+      <pre>{{ initialValues }}</pre>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 300px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: rgb(0, 255, 102);
+  color: rgb(65, 65, 65);
+  font-weight: bold;
+  cursor: pointer;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
 }
 </style>
