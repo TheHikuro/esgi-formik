@@ -1,6 +1,7 @@
 <script setup>
-import { defineProps } from "vue";
-defineProps({
+import { defineProps, reactive, provide } from "vue";
+
+const props = defineProps({
     initialValues: {
         type: Object,
         required: true,
@@ -15,21 +16,23 @@ defineProps({
     },
 });
 
-const setFormValue = (name, value) => {
-    value[name] = value;
+const formValues = reactive(props.initialValues);
+provide("formValues", formValues);
+
+const handleChangeValue = (name, value) => {
+    formValues[name] = value;
 };
 
 const handleSubmit = () => {
-    onSubmit({
-        values,
-    });
+    console.log(formValues);
+    props.onSubmit(formValues);
 };
 
 </script>
 
 <template>
     <form @submit.prevent="handleSubmit">
-        <slot :values="initialValues" :setFormValue="setFormValue" />
+        <slot :value="formValues" :set-value="handleChangeValue" />
     </form>
 </template>
   
