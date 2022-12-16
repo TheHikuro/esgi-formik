@@ -1,16 +1,15 @@
 <script setup>
 import Formik from './components/Formik.vue';
 import InputCustom from './components/InputCustom.vue';
-import { reactive } from 'vue';
 import * as yup from "yup";
 
-const initialValues = reactive({
+const initialValues = {
   name: "",
   email: "",
   password: "",
-  gender: "male",
+  gender: "female",
   comment: "",
-});
+};
 
 const validationSchema = yup.object({
   name: yup.string().required(),
@@ -21,14 +20,14 @@ const validationSchema = yup.object({
 });
 
 const onSubmit = (values) => {
-  console.log('test');
+  console.log(values);
 };
 
 </script>
 
 <template v-slot="defaut">
   <div class="main-container">
-    <Formik :initial-values="initialValues" :validation-schema="validationSchema" :on-submit="onSubmit">
+    <Formik :initialValues="initialValues" :validationSchema="validationSchema" :onSubmit="onSubmit">
       <InputCustom name="name" as='input' label="Name" placeholder="ex: Karl Marques" />
       <InputCustom name="email" as="input" label="Email" placeholder="ex: exemple@myges.fr" />
       <InputCustom name="password" as="input" label="Password" placeholder="ex: Admin(lol)" type="password" />

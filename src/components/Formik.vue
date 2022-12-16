@@ -16,23 +16,19 @@ const props = defineProps({
     },
 });
 
-const formValues = reactive(props.initialValues);
-provide("formValues", formValues);
+const values = reactive(props.initialValues);
+provide("values", values);
 
-const handleChangeValue = (name, value) => {
-    formValues[name] = value;
-};
-
-const handleSubmit = () => {
-    console.log(formValues);
-    props.onSubmit(formValues);
+const handleSubmit = (event) => {
+    event.preventDefault();
+    props.onSubmit(values);
 };
 
 </script>
 
 <template>
     <form @submit.prevent="handleSubmit">
-        <slot :value="formValues" :set-value="handleChangeValue" />
+        <slot />
     </form>
 </template>
   

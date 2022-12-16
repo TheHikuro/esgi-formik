@@ -1,7 +1,6 @@
 <script setup>
 import { inject } from 'vue';
 
-
 const props = defineProps({
     as: {
         type: [Object, String],
@@ -11,14 +10,21 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    label: {
+        type: String,
+        required: false,
+    },
+    value: {
+        type: String,
+        required: false,
+    },
 });
 
-const formValues = inject('formValues');
-
+const values = inject('values');
 </script>
 
 <template>
-    <component :is="as" :name="name" :value="formValues[props.name]">
+    <component :is="as" :name="name" :value="values[name]" @input="$emit('input', $event.target.value)">
         <slot />
     </component>
 </template>
