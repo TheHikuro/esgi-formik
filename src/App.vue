@@ -7,7 +7,7 @@ const initialValues = {
   name: "",
   email: "",
   password: "",
-  gender: "female",
+  gender: "male",
   comment: "",
 };
 
@@ -20,7 +20,7 @@ const validationSchema = yup.object({
 });
 
 const onSubmit = (values) => {
-  console.log(values);
+  alert("SUCCESS !\n" + JSON.stringify(values, null, 2));
 };
 
 </script>
@@ -36,11 +36,8 @@ const onSubmit = (values) => {
         <option value="female">Female</option>
       </InputCustom>
       <InputCustom name="comment" as="textarea" placeholder="Comment" />
-      <button type="submit">Submit</button>
+      <InputCustom name="submit" as="button" type="submit" label="Submit">Submit</InputCustom>
     </Formik>
-    <div class="values">
-      <pre>{{ initialValues }}</pre>
-    </div>
   </div>
 </template>
 
